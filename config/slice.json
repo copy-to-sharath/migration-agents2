@@ -1,0 +1,13 @@
+{
+  "run_id": "auto",
+  "artifact_version": 1,
+  "output_root": "data/parquet",
+  "workers": "auto",
+  "max_source_refs_per_slice": 200,
+  "max_excerpt_chars": 500,
+  "slicing_mode": "entry_graph",
+  "entry_filter_top_level_only": false,
+  "entry_filter_min_depth": 1,
+  "entry_filter_kinds": [],
+  "entry_filter_patterns": []
+}

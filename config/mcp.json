@@ -1,0 +1,14 @@
+{
+  "parquet_root": "data/parquet",
+  "duckdb_dir": "data/duckdb",
+  "max_rows": 2000,
+  "run": {
+    "command": ".venv/bin/python -m migration_agents.mcp.server --config config/mcp.json",
+    "env": {
+      "PYTHONPATH": "src"
+    },
+    "prefer_venv": true,
+    "venv_dirs": [".venv", "venv", "env", ".env"],
+    "notes": "Informational only; VS Code uses .vscode/mcp.json for MCP servers."
+  }
+}

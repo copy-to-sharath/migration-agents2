@@ -1,0 +1,142 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
+  "name": "cics",
+  "rules": {
+    "source_file": {
+      "type": "REPEAT",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "exec_cics_block"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "comment"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "other_line"
+          }
+        ]
+      }
+    },
+    "exec_cics_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "EXEC\\s+CICS",
+          "flags": "i"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "command_name"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "option"
+          }
+        },
+        {
+          "type": "PATTERN",
+          "value": "END-EXEC",
+          "flags": "i"
+        }
+      ]
+    },
+    "command_name": {
+      "type": "PATTERN",
+      "value": "[A-Z][A-Z0-9]*",
+      "flags": "i"
+    },
+    "option": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "keyword"
+            },
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "SYMBOL",
+              "name": "value"
+            },
+            {
+              "type": "STRING",
+              "value": ")"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "keyword"
+        }
+      ]
+    },
+    "keyword": {
+      "type": "PATTERN",
+      "value": "[A-Z][A-Z0-9]*",
+      "flags": "i"
+    },
+    "value": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "qualified_name"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        }
+      ]
+    },
+    "qualified_name": {
+      "type": "PATTERN",
+      "value": "[A-Z][A-Z0-9\\-]*(\\.[A-Z][A-Z0-9\\-]*)*",
+      "flags": "i"
+    },
+    "string_literal": {
+      "type": "PATTERN",
+      "value": "'[^']*'"
+    },
+    "number": {
+      "type": "PATTERN",
+      "value": "\\d+"
+    },
+    "comment": {
+      "type": "PATTERN",
+      "value": "\\*[^\\n]*"
+    },
+    "other_line": {
+      "type": "PATTERN",
+      "value": "[^\\n]+\\n"
+    }
+  },
+  "extras": [
+    {
+      "type": "PATTERN",
+      "value": "\\s"
+    }
+  ],
+  "conflicts": [],
+  "precedences": [],
+  "externals": [],
+  "inline": [],
+  "supertypes": [],
+  "reserved": {}
+}

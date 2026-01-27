@@ -1,0 +1,10 @@
+digraph G {
+  labelloc="t";
+  label="entry_group=scc_M18_M19_M20 depth_scores=capped:2,norm:0.04,log:0.28,depth_breadth:0.03";
+  "M18" [label="M18\nentry_group\nsymbol\npr=0.0884"];
+  "M19" [label="M19\nentry_group\nsymbol\npr=0.0884"];
+  "M20" [label="M20\nentry_group\ncallee\npr=0.0884"];
+  "M18" -> "M19";
+  "M19" -> "M20";
+  "M20" -> "M18";
+}

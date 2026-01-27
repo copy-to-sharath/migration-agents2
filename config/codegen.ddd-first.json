@@ -1,0 +1,32 @@
+{
+    "run_id": "auto",
+    "artifact_version": 1,
+    "output_root": "data/parquet",
+    "generated_root": "generated",
+    
+    "solution_name": "QuickPay",
+    "api_namespace": "QuickPay",
+    "test_namespace": "QuickPay.Tests",
+    
+    "slice_ids": [],
+    
+    "target_framework": "dotnet8",
+    "generate_tests": true,
+    
+    "use_clean_architecture": true,
+    "use_cqrs": true,
+    "use_ddd": true,
+    
+    "ddd_first": true,
+    "require_domain_verification": true,
+    "require_gherkin_verification": true,
+    "require_contract_verification": true,
+    
+    "contract_first": false,
+    
+    "_comment": "DDD analysis is done via Copilot MCP tools. Use ddd_get_analysis_prompt and ddd_apply_analysis.",
+    "llm_provider": "copilot",
+    "llm_model": "gpt-4",
+    "llm_timeout_sec": 300,
+    "llm_max_input_chars": 16000
+}

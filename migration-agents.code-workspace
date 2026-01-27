@@ -1,0 +1,56 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"chat.tools.terminal.autoApprove": {
+			"/^python -m migration_agents\\.ingestion\\.main --config config/ingestion\\.test\\.json 2>&1 \\| head -100$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			".venv/bin/python": true,
+			"/^cd /home/sharath/code/migration-agents && source \\.venv/bin/activate && python tools/clean_ingestion_artifacts\\.py --flush-all --execute && python -m migration_agents\\.ingestion\\.main --config config/ingestion\\.json --overrides '\\{\"input_root\": \"/home/sharath/code/nopCommerce-release-1\\.90\", \"output_root\": \"data/parquet\", \"artifact_version\": 1, \"incremental\": false, \"exclude_dirs\": \\[\"\\.git\", \"\\.github\", \"\\.vs\", \"\\.idea\", \"\\.vscode\", \"\\.venv\", \"venv\", \"__pycache__\", \"node_modules\", \"bin\", \"obj\", \"dist\", \"build\", \"target\", \"out\", \"coverage\", \"packages\", \"vendor\", \"CMakeFiles\"\\], \"exclude_extensions\": \\[\"\\.png\", \"\\.jpg\", \"\\.jpeg\", \"\\.gif\", \"\\.svg\", \"\\.ico\", \"\\.bmp\", \"\\.zip\", \"\\.tar\", \"\\.gz\", \"\\.7z\", \"\\.rar\", \"\\.bin\", \"\\.exe\", \"\\.dll\", \"\\.so\", \"\\.dylib\", \"\\.a\", \"\\.lib\", \"\\.o\", \"\\.obj\", \"\\.pdb\", \"\\.class\", \"\\.jar\", \"\\.war\", \"\\.ear\", \"\\.apk\", \"\\.ipa\", \"\\.nupkg\", \"\\.snupkg\", \"\\.whl\", \"\\.egg\", \"\\.pyc\", \"\\.pyo\", \"\\.pyd\", \"\\.iso\", \"\\.dmg\", \"\\.msi\", \"\\.pkg\", \"\\.deb\", \"\\.rpm\", \"\\.mp4\", \"\\.mp3\", \"\\.avi\", \"\\.mov\", \"\\.wmv\", \"\\.flv\", \"\\.mkv\"\\]\\}'$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^cd /home/sharath/code/migration-agents && source \\.venv/bin/activate && python -m migration_agents\\.ingestion\\.main --config config/ingestion\\.json$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^cd /home/sharath/code/migration-agents && source \\.venv/bin/activate && python -m migration_agents\\.parser\\.main --config config/parser\\.json$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^cd /home/sharath/code/migration-agents && source \\.venv/bin/activate && python -m migration_agents\\.slice_extractor\\.main --config config/slice\\.json$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^cd /home/sharath/code/migration-agents && source \\.venv/bin/activate && python -c \"\nimport duckdb\ncon = duckdb\\.connect\\(\\)\ndf = con\\.execute\\(\\\\\"\\\\\"\\\\\"\nSELECT slice_id, entry_point_name, entry_point_type, depth, node_count, file_count \nFROM read_parquet\\('data/parquet/run_20260126162646/step_3/slice_context/run_id=run_20260126162646/artifact_version=1/slice_context-0\\.parquet'\\)\nORDER BY depth DESC, node_count DESC \nLIMIT 30\n\\\\\"\\\\\"\\\\\"\\)\\.fetchdf\\(\\)\nprint\\(df\\.to_string\\(\\)\\)\n\"$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^cd /home/sharath/code/migration-agents && source \\.venv/bin/activate && python -c \"\nimport duckdb\ncon = duckdb\\.connect\\(\\)\ndf = con\\.execute\\(\\\\\"\\\\\"\\\\\"\nSELECT \\* FROM read_parquet\\('data/parquet/run_20260126162646/step_3/slice_context/run_id=run_20260126162646/artifact_version=1/slice_context-0\\.parquet'\\)\nLIMIT 1\n\\\\\"\\\\\"\\\\\"\\)\\.fetchdf\\(\\)\nprint\\(df\\.columns\\.tolist\\(\\)\\)\n\"$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^cd /home/sharath/code/migration-agents && source \\.venv/bin/activate && python -c \"\nimport duckdb\ncon = duckdb\\.connect\\(\\)\ndf = con\\.execute\\(\\\\\"\\\\\"\\\\\"\nSELECT sc\\.slice_id, sc\\.summary, sm\\.depth, sm\\.node_count\nFROM read_parquet\\('data/parquet/run_20260126162646/step_3/slice_context/run_id=run_20260126162646/artifact_version=1/slice_context-0\\.parquet'\\) sc\nJOIN read_parquet\\('data/parquet/run_20260126162646/step_3/slice_manifest/run_id=run_20260126162646/artifact_version=1/slice_manifest-0\\.parquet'\\) sm\nON sc\\.slice_id = sm\\.slice_id\nORDER BY sm\\.depth DESC, sm\\.node_count DESC \nLIMIT 30\n\\\\\"\\\\\"\\\\\"\\)\\.fetchdf\\(\\)\nprint\\(df\\.to_string\\(\\)\\)\n\"$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^cd /home/sharath/code/migration-agents && source \\.venv/bin/activate && python -c \"\nimport duckdb\ncon = duckdb\\.connect\\(\\)\ndf = con\\.execute\\(\\\\\"\\\\\"\\\\\"\nSELECT \\* FROM read_parquet\\('data/parquet/run_20260126162646/step_3/slice_manifest/run_id=run_20260126162646/artifact_version=1/slice_manifest-0\\.parquet'\\)\nLIMIT 1\n\\\\\"\\\\\"\\\\\"\\)\\.fetchdf\\(\\)\nprint\\(df\\.columns\\.tolist\\(\\)\\)\n\"$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^cd /home/sharath/code/migration-agents && source \\.venv/bin/activate && python -c \"\nimport duckdb\ncon = duckdb\\.connect\\(\\)\n\n# Get slice summaries with counts\ndf = con\\.execute\\(\\\\\"\\\\\"\\\\\"\nSELECT \n    sc\\.slice_id, \n    sc\\.summary,\n    COUNT\\(sm\\.symbol_id\\) as symbol_count,\n    COUNT\\(DISTINCT sm\\.file_path\\) as file_count\nFROM read_parquet\\('data/parquet/run_20260126162646/step_3/slice_context/run_id=run_20260126162646/artifact_version=1/slice_context-0\\.parquet'\\) sc\nLEFT JOIN read_parquet\\('data/parquet/run_20260126162646/step_3/slice_manifest/run_id=run_20260126162646/artifact_version=1/slice_manifest-0\\.parquet'\\) sm\nON sc\\.slice_id = sm\\.slice_id\nGROUP BY sc\\.slice_id, sc\\.summary\nORDER BY symbol_count DESC\nLIMIT 30\n\\\\\"\\\\\"\\\\\"\\)\\.fetchdf\\(\\)\nprint\\(df\\.to_string\\(\\)\\)\n\"$/": {
+				"approve": true,
+				"matchCommandLine": true
+			},
+			"/^cd /home/sharath/code/migration-agents && python -c \"\nfrom pathlib import Path\nfrom src\\.migration_agents\\.codegen\\.ddd_state_manager import DDDStateManager, JobStatus, SliceStatus\n\n# Test basic operations\nsm = DDDStateManager\\(Path\\('/tmp/test_state'\\), 'test_run'\\)\n\n# Create a job\njob = sm\\.create_job\\(\n    solution_name='test_solution',\n    total_slices=100,\n    batch_size=10,\n\\)\nprint\\(f'Created job: \\{job\\.job_id\\}'\\)\n\n# Get progress\nprogress = sm\\.get_job_progress\\(job\\.job_id\\)\nprint\\(f'Progress: \\{progress\\}'\\)\nprint\\('State manager works!'\\)\n\"$/": {
+				"approve": true,
+				"matchCommandLine": true
+			}
+		}
+	}
+}

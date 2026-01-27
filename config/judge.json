@@ -1,0 +1,8 @@
+{
+  "run_id": "auto",
+  "artifact_version": 1,
+  "output_root": "data/parquet",
+  "check_citations": true,
+  "check_coverage": true,
+  "check_dead_code": true
+}

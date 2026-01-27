@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DDD Batch Processing Configuration",
+  "description": "Configuration for batch DDD analysis with resumable state management",
+  
+  "job": {
+    "solution_name": "nopcommerce",
+    "description": "NopCommerce 1.90 to modern .NET DDD migration",
+    "output_root": "data/parquet",
+    "generated_root": "generated/nopcommerce"
+  },
+  
+  "batch": {
+    "batch_size": 50,
+    "max_concurrent_batches": 1,
+    "rate_limit_ms": 500,
+    "auto_checkpoint": true,
+    "checkpoint_interval": 5
+  },
+  
+  "slicing": {
+    "min_depth": 0,
+    "max_depth": 10,
+    "source_path": "vendor/nopcommerce/nopCommerce-release-1.90",
+    "include_patterns": ["*.cs", "*.vb", "*.aspx", "*.ascx"],
+    "exclude_patterns": ["*Test*", "*Mock*", "*Fixture*"]
+  },
+  
+  "llm": {
+    "provider": "copilot",
+    "model": "gpt-4o-mini",
+    "max_tokens": 4096,
+    "temperature": 0.1,
+    "retry_attempts": 3,
+    "retry_delay_ms": 1000,
+    "timeout_ms": 60000
+  },
+  
+  "analysis": {
+    "extract_aggregates": true,
+    "extract_domain_events": true,
+    "extract_value_objects": true,
+    "extract_invariants": true,
+    "infer_bounded_contexts": true,
+    "skip_already_analyzed": true
+  },
+  
+  "output": {
+    "format": "parquet",
+    "save_raw_llm_responses": true,
+    "generate_domain_model_json": true,
+    "generate_ubiquitous_language": true
+  },
+  
+  "resume": {
+    "enabled": true,
+    "resume_from_last_checkpoint": true,
+    "skip_completed_slices": true,
+    "max_retries_per_slice": 3
+  },
+  
+  "notifications": {
+    "log_level": "INFO",
+    "progress_interval_slices": 10,
+    "on_batch_complete": true,
+    "on_job_complete": true
+  }
+}

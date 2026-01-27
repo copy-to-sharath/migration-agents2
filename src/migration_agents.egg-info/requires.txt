@@ -1,0 +1,10 @@
+duckdb>=1.0.0
+graphviz>=0.21
+networkx>=3.3
+pandas>=3.0.0
+pdfminer.six>=20240706
+pyarrow>=16.1.0
+pydantic>=2.8.2
+python-docx>=1.1.2
+sentence-transformers>=3.0.1
+tree-sitter>=0.22.3

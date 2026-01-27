@@ -1,0 +1,2 @@
+(string) @const
+(number) @const

@@ -1,0 +1,13 @@
+{
+  "max_depth_limit": 50,
+  "node_count_limit": 200,
+  "depth_score_threshold": 1,
+  "entry_graph_top_k": 5,
+  "print_graph_text": false,
+  "render_png": true,
+  "graphs_root": "tools/graphs",
+  "log_level": "INFO",
+  "log_every": 1,
+  "incremental": false,
+  "clean_output": true
+}

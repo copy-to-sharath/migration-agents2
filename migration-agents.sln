@@ -1,0 +1,53 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{07C2787E-EAC7-C090-1BA3-A61EC2A24D84}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendor", "vendor", "{3EFB08DA-2EA9-FE77-18DF-C4D4293AFD9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "roslyn-parser", "roslyn-parser", "{66EDD425-A3AE-7D8B-8F59-656D1C7198C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynParser", "tools\roslyn-parser\RoslynParser.csproj", "{960C5C25-1EB7-91A3-E685-E6220F9ADC97}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tree-sitter", "tree-sitter", "{3CA80BEC-3E8B-0F76-7CF1-8A6D18FEF2F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "c_sharp", "c_sharp", "{DFA66501-0E34-E3CE-0B33-143136479A2D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{DE7EF76F-613A-E1B3-D76C-8DE2389A59C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "highlight-test-generator", "highlight-test-generator", "{B2D84251-3EEE-8069-4711-43D7352007EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "vendor\tree-sitter\c_sharp\tools\highlight-test-generator\Generator.csproj", "{E76C324E-EDC8-1E83-FE27-56AF25B32C3F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{960C5C25-1EB7-91A3-E685-E6220F9ADC97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{960C5C25-1EB7-91A3-E685-E6220F9ADC97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{960C5C25-1EB7-91A3-E685-E6220F9ADC97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{960C5C25-1EB7-91A3-E685-E6220F9ADC97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E76C324E-EDC8-1E83-FE27-56AF25B32C3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E76C324E-EDC8-1E83-FE27-56AF25B32C3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E76C324E-EDC8-1E83-FE27-56AF25B32C3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E76C324E-EDC8-1E83-FE27-56AF25B32C3F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{66EDD425-A3AE-7D8B-8F59-656D1C7198C8} = {07C2787E-EAC7-C090-1BA3-A61EC2A24D84}
+		{960C5C25-1EB7-91A3-E685-E6220F9ADC97} = {66EDD425-A3AE-7D8B-8F59-656D1C7198C8}
+		{3CA80BEC-3E8B-0F76-7CF1-8A6D18FEF2F6} = {3EFB08DA-2EA9-FE77-18DF-C4D4293AFD9C}
+		{DFA66501-0E34-E3CE-0B33-143136479A2D} = {3CA80BEC-3E8B-0F76-7CF1-8A6D18FEF2F6}
+		{DE7EF76F-613A-E1B3-D76C-8DE2389A59C4} = {DFA66501-0E34-E3CE-0B33-143136479A2D}
+		{B2D84251-3EEE-8069-4711-43D7352007EF} = {DE7EF76F-613A-E1B3-D76C-8DE2389A59C4}
+		{E76C324E-EDC8-1E83-FE27-56AF25B32C3F} = {B2D84251-3EEE-8069-4711-43D7352007EF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {231A79E9-5845-41AB-BE55-810369091AB2}
+	EndGlobalSection
+EndGlobal

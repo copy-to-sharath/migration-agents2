@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: migration-agents
+Version: 0.1.0
+Summary: Agentic migration pipeline tooling
+Requires-Python: <3.14,>=3.13
+Requires-Dist: duckdb>=1.0.0
+Requires-Dist: graphviz>=0.21
+Requires-Dist: networkx>=3.3
+Requires-Dist: pandas>=3.0.0
+Requires-Dist: pdfminer.six>=20240706
+Requires-Dist: pyarrow>=16.1.0
+Requires-Dist: pydantic>=2.8.2
+Requires-Dist: python-docx>=1.1.2
+Requires-Dist: sentence-transformers>=3.0.1
+Requires-Dist: tree-sitter>=0.22.3

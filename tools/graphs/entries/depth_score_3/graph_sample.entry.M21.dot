@@ -1,0 +1,15 @@
+digraph G {
+  labelloc="t";
+  label="entry_subgraph=M21 depth_scores=capped:3,norm:0.06,log:0.35,depth_breadth:0.09";
+  "M10" [label="M10\nexit\nsymbol\npr=0.0765"];
+  "M21" [label="M21\nentry\nsymbol\npr=0.0133"];
+  "M22" [label="M22\nnode\nsymbol\npr=0.0170"];
+  "M23" [label="M23\nnode\nsymbol\npr=0.0277"];
+  "M24" [label="M24\nexit\nsymbol\npr=0.0170"];
+  "M25" [label="M25\nexit\nsymbol\npr=0.0170"];
+  "M21" -> "M22";
+  "M21" -> "M24";
+  "M21" -> "M25";
+  "M22" -> "M23";
+  "M23" -> "M10";
+}
