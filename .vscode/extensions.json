@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-dotnettools.csharp",
+    "ms-dotnettools.csdevkit",
+    "ms-dotnettools.vscode-dotnet-runtime",
+    "ms-vscode.powershell",
+    "github.copilot",
+    "github.copilot-chat",
+    "bierner.markdown-mermaid",
+    "vstirbu.vscode-mermaid-preview",
+    "mermaidchart.vscode-mermaid-chart"
+  ],
+  "unwantedRecommendations": []
+}

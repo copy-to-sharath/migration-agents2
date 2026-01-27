@@ -1,0 +1,29 @@
+{
+  "chat.mcp.autoApprove": {
+    "migration-agents": {
+      "tools": [
+        "duckdb_query",
+        "analyzer",
+        "builder_generate",
+        "builder_fix",
+        "judge_validate",
+        "pipeline_status",
+        "list_endpoints",
+        "list_slices",
+        "get_slice_context"
+      ]
+    }
+  },
+  "github.copilot.chat.runCommand.autoApprove": true,
+  "github.copilot.chat.response.autoApprove": true,
+  "chat.agent.autoApprove": true,
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  
+  // Save Copilot chat history
+  "chat.experimental.persistHistory": true,
+  "chat.commandCenter.enabled": true,
+  
+  // Export chat sessions
+  "github.copilot.chat.localeOverride": "en"
+}

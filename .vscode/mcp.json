@@ -1,0 +1,11 @@
+{
+  "servers": {
+    "migration-agents": {
+      "command": ".venv/bin/python",
+      "args": ["-m", "migration_agents.mcp.server", "--config", "config/mcp.json"],
+      "env": {
+        "PYTHONPATH": "src"
+      }
+    }
+  }
+}
