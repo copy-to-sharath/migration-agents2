@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RoslynParser")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+16237a626465b9ea99df17e9bb603c46350e9872")]
 [assembly: System.Reflection.AssemblyProductAttribute("RoslynParser")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RoslynParser")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
