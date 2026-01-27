@@ -1,0 +1,58 @@
+# Node modules
+node_modules/
+package-lock.json
+
+# Build artifacts
+build/
+*.node
+*.wasm
+target/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+dist/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tree-sitter generated files
+src/parser.c
+src/tree_sitter/
+binding.gyp
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Agent OS - all files should be local only
+.agent-os/
+
+# Serena - all files should be local only
+.serena/
+
+# Claude - all files should be local only
+CLAUDE.md
+CLAUDE.md.local
+.claude/
+*.claude-session
+*.claude-temp
+
+# Generated output files
+ast_output/
+jcl_extraction_results.json
+jcl_extraction_summary.csv
+*.ast

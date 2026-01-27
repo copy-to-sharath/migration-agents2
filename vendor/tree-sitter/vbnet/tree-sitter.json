@@ -1,0 +1,39 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "vbnet",
+      "camelcase": "no",
+      "title": "no",
+      "scope": "source.vbnet",
+      "file-types": [
+        "vb"
+      ],
+      "injection-regex": "^vbnet$",
+      "class-name": "TreeSitterVbnet"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "no",
+    "authors": [
+      {
+        "name": "Gabriel Vitor Klaumann Gubert",
+        "email": "gvkg97@gmail.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/gabriel-gubert/tree-sitter-vbnet.git"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}

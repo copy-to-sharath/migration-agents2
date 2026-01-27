@@ -1,0 +1,110 @@
+================================================================================
+DD with SYSOUT=*
+================================================================================
+
+//SYSPRINT DD SYSOUT=*
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (dd_statement
+    (label
+      (name))
+    (parameter
+      (keyword)
+      (sysout_value))))
+
+================================================================================
+DD with DSN and DISP continuation
+================================================================================
+
+//STEPLIB  DD DISP=SHR,
+//            DSN=AWS.M2.CARDDEMO.LOADLIB
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (dd_statement
+    (label
+      (name))
+    (parameter
+      (keyword)
+      (parameter_value))
+    (continuation_line
+      (parameter
+        (keyword)
+        (dataset_name)))))
+
+================================================================================
+DD with VSAM dataset
+================================================================================
+
+//TCATBALF DD DISP=SHR,
+//         DSN=AWS.M2.CARDDEMO.TCATBALF.VSAM.KSDS
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (dd_statement
+    (label
+      (name))
+    (parameter
+      (keyword)
+      (parameter_value))
+    (continuation_line
+      (parameter
+        (keyword)
+        (dataset_name)))))
+
+================================================================================
+DD with GDG (+1) dataset
+================================================================================
+
+//TRANSACT DD DISP=(NEW,CATLG,DELETE),
+//         UNIT=SYSDA,
+//         DCB=(RECFM=F,LRECL=350,BLKSIZE=0),
+//         SPACE=(CYL,(1,1),RLSE),
+//         DSN=AWS.M2.CARDDEMO.SYSTRAN(+1)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (dd_statement
+    (label
+      (name))
+    (parameter
+      (keyword)
+      (subparameter_list
+        (subparameter)
+        (subparameter)
+        (subparameter)))
+    (continuation_line
+      (parameter
+        (keyword)
+        (parameter_value)))
+    (continuation_line
+      (parameter
+        (keyword)
+        (subparameter_list
+          (subparameter
+            (keyword)
+            (parameter_value))
+          (subparameter
+            (keyword)
+            (parameter_value))
+          (subparameter
+            (keyword)
+            (parameter_value)))))
+    (continuation_line
+      (parameter
+        (keyword)
+        (subparameter_list
+          (subparameter)
+          (subparameter_list
+            (subparameter)
+            (subparameter))
+          (subparameter))))
+    (continuation_line
+      (parameter
+        (keyword)
+        (gdg_dataset)))))

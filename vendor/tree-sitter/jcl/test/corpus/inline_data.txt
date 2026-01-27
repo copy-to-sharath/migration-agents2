@@ -1,0 +1,48 @@
+================================================================================
+DD with inline data (FTP commands)
+================================================================================
+
+//SYSIN DD *
+ 172.31.21.124
+ carddemousr
+ ftpdemo1
+ ASCII
+ pwd
+ dir
+ cd /ftpfolder
+ PUT 'AWS.M2.CARDEMO.FTP.TEST' welcome.txt
+ QUIT
+//*
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (dd_statement
+    (label
+      (name))
+    (dd_asterisk)
+    (inline_data))
+  (comment))
+
+================================================================================
+DD with inline data (IDCAMS commands)  
+================================================================================
+
+//SYSIN    DD   *
+   DEFINE GENERATIONDATAGROUP -
+   (NAME(AWS.M2.CARDDEMO.TRANSACT.BKUP) -
+    LIMIT(5) -
+    SCRATCH -
+   )
+   IF LASTCC=12 THEN SET MAXCC=0
+/*
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (dd_statement
+    (label
+      (name))
+    (dd_asterisk)
+    (inline_data
+      (inline_delimiter))))

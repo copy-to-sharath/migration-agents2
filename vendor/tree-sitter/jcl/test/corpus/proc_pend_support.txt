@@ -1,0 +1,88 @@
+================================================================================
+PROC with PEND
+================================================================================
+
+//GIMUNZIP PROC HLQ='GIMUNZIP'
+//         SET  HLQ='&HLQ'  
+//STEP1    EXEC PGM=GIMAPI,PARM='UNZIP'
+//SYSIN    DD   *
+  UNZIP ARCHIVE(&HLQ..GIMZIP.SMPPTFIN) 
+/*
+//SYSPRINT DD   SYSOUT=*
+//GIMOUT   DD   DSN=&HLQ..GIMZIP.SMPPTFIN,DISP=(OLD,DELETE)
+//         PEND
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (proc_definition
+    (proc_statement
+      (label
+        (name))
+      (parameter
+        (keyword)
+        (quoted_string)))
+    (set_statement
+      (label)
+      (symbol_assignment
+        (symbol_name)
+        (symbol_value)))
+    (exec_statement
+      (label
+        (name))
+      (program_name)
+      (parameter
+        (keyword)
+        (quoted_string)))
+    (dd_statement
+      (label
+        (name))
+      (inline_data))
+    (dd_statement
+      (label
+        (name))
+      (parameter
+        (keyword)
+        (sysout_value)))
+    (dd_statement
+      (label
+        (name))
+      (parameter
+        (keyword)
+        (dataset_name))
+      (continuation_line
+        (parameter
+          (keyword)
+          (subparameter_list
+            (subparameter)
+            (subparameter)))))
+    (pend_statement
+      (label))))
+
+================================================================================
+Simple PROC with SET
+================================================================================
+
+//MYPROC   PROC
+//         SET  MYVAR=VALUE1
+//STEP1    EXEC PGM=MYPGM
+//         PEND
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (proc_definition
+    (proc_statement
+      (label
+        (name)))
+    (set_statement
+      (label)
+      (symbol_assignment
+        (symbol_name)
+        (symbol_value)))
+    (exec_statement
+      (label
+        (name))
+      (program_name))
+    (pend_statement
+      (label))))

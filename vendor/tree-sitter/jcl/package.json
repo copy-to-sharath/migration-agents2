@@ -1,0 +1,72 @@
+{
+  "name": "tree-sitter-jcl",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for JCL (Job Control Language)",
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "keywords": [
+    "tree-sitter",
+    "jcl",
+    "mainframe",
+    "zos",
+    "parser"
+  ],
+  "files": [
+    "grammar.js",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**"
+  ],
+  "scripts": {
+    "test": "mocha test/**/*.test.js",
+    "test:watch": "mocha test/**/*.test.js --watch",
+    "build": "tree-sitter generate && node-gyp build",
+    "generate": "tree-sitter generate",
+    "parse": "tree-sitter parse",
+    "test:corpus": "tree-sitter test",
+    "lint": "eslint grammar.js test/**/*.js",
+    "coverage": "nyc npm test",
+    "install": "node-gyp-build",
+    "prebuildify": "prebuildify --napi --strip"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "tree-sitter": "^0.25.0",
+    "node-addon-api": "^7.1.0",
+    "node-gyp-build": "^4.8.0"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.0"
+  },
+  "peerDependenciesMeta": {
+    "tree_sitter": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "eslint": "^8.50.0",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "tree-sitter-cli": "^0.20.8",
+    "prebuildify": "^6.0.0"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.jcl",
+      "file-types": [
+        "jcl",
+        "job",
+        "proc",
+        "prc"
+      ]
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/tree-sitter-jcl.git"
+  }
+}

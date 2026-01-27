@@ -1,0 +1,83 @@
+================================================================================
+JOB with continuation and NOTIFY
+================================================================================
+
+//INTCALC JOB 'INTEREST CALCULATOR',CLASS=A,MSGCLASS=0,
+//   NOTIFY=&SYSUID
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (job_statement
+    (label
+      (name))
+    (quoted_string)
+    (parameter
+      (keyword)
+      (parameter_value))
+    (parameter  
+      (keyword)
+      (parameter_value))
+    (continuation_line
+      (parameter
+        (keyword)
+        (symbolic_parameter)))))
+
+================================================================================
+JOB with multiple parameters and JOB number
+================================================================================
+
+//FTPJCLS  JOB 'FTP JCL',CLASS=A,MSGCLASS=H,MSGLEVEL=(1,1),
+//             REGION=0M,NOTIFY=&SYSUID,TIME=1440
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (job_statement
+    (label
+      (name))
+    (quoted_string)
+    (parameter
+      (keyword)
+      (parameter_value))
+    (parameter
+      (keyword)
+      (parameter_value))
+    (parameter
+      (keyword)
+      (subparameter_list
+        (subparameter)
+        (subparameter)))
+    (continuation_line
+      (parameter
+        (keyword)
+        (parameter_value))
+      (parameter
+        (keyword)
+        (symbolic_parameter))
+      (parameter
+        (keyword)
+        (parameter_value)))))
+
+================================================================================
+Simple JOB with symbolic parameter
+================================================================================
+
+//DEFGDGB JOB 'DEF GDG BASES',CLASS=A,MSGCLASS=0,NOTIFY=&SYSUID
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (job_statement
+    (label
+      (name))
+    (quoted_string)
+    (parameter
+      (keyword)
+      (parameter_value))
+    (parameter
+      (keyword)
+      (parameter_value))
+    (parameter
+      (keyword)
+      (symbolic_parameter))))
