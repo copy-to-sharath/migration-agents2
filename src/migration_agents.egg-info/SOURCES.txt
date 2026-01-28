@@ -1,6 +1,7 @@
 pyproject.toml
 src/migration_agents/__init__.py
 src/migration_agents/config_loader.py
+src/migration_agents/constants.py
 src/migration_agents/logging_utils.py
 src/migration_agents/shared_multiprocessing.py
 src/migration_agents/shared_run_id.py
@@ -14,8 +15,16 @@ src/migration_agents/api_migration/__init__.py
 src/migration_agents/api_migration/config.py
 src/migration_agents/api_migration/main.py
 src/migration_agents/codegen/__init__.py
+src/migration_agents/codegen/architecture.py
+src/migration_agents/codegen/batch_ddd_runner.py
+src/migration_agents/codegen/batch_runner.py
 src/migration_agents/codegen/config.py
+src/migration_agents/codegen/contracts.py
+src/migration_agents/codegen/ddd_builder.py
+src/migration_agents/codegen/ddd_state_manager.py
+src/migration_agents/codegen/generator.py
 src/migration_agents/codegen/main.py
+src/migration_agents/codegen/pipeline_state_manager.py
 src/migration_agents/codegen/templates.py
 src/migration_agents/domain_architect/__init__.py
 src/migration_agents/domain_architect/config.py
@@ -30,6 +39,8 @@ src/migration_agents/ingestion/main.py
 src/migration_agents/ingestion/mcp_client.py
 src/migration_agents/ingestion/parquet_writer.py
 src/migration_agents/ingestion/steps/__init__.py
+src/migration_agents/judge/__init__.py
+src/migration_agents/judge/main.py
 src/migration_agents/knowledge_base/__init__.py
 src/migration_agents/knowledge_base/config.py
 src/migration_agents/knowledge_base/main.py
@@ -46,6 +57,7 @@ src/migration_agents/parser/__init__.py
 src/migration_agents/parser/build.py
 src/migration_agents/parser/build_languages.py
 src/migration_agents/parser/config.py
+src/migration_agents/parser/coverage_analyzer.py
 src/migration_agents/parser/coverage_report.py
 src/migration_agents/parser/coverage_summary.py
 src/migration_agents/parser/extractors.py
@@ -53,6 +65,7 @@ src/migration_agents/parser/main.py
 src/migration_agents/parser/query_loader.py
 src/migration_agents/parser/render.py
 src/migration_agents/parser/roslyn_runner.py
+src/migration_agents/parser/semantic_resolver.py
 src/migration_agents/parser/symbol_extractor.py
 src/migration_agents/parser/tree_sitter_loader.py
 src/migration_agents/pipeline/__init__.py
@@ -61,6 +74,7 @@ src/migration_agents/pipeline/main.py
 src/migration_agents/slice_extractor/__init__.py
 src/migration_agents/slice_extractor/config.py
 src/migration_agents/slice_extractor/main.py
+src/migration_agents/utils/duckdb_helper.py
 src/migration_agents/vectorization/__init__.py
 src/migration_agents/vectorization/config.py
 src/migration_agents/vectorization/main.py

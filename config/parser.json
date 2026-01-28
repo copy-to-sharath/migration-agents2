@@ -2,7 +2,7 @@
   "run_id": "auto",
   "artifact_version": 1,
   "output_root": "data/parquet",
-  "language_library_path": "tree-sitter/languages.so",
+  "language_library_path": "tree-sitter/languages.dll",
   "language_map": {
     ".cs": "c_sharp",
     ".vb": "vbnet",

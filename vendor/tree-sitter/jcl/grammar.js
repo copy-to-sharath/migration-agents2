@@ -1,22 +1,27 @@
 module.exports = grammar({
   name: 'jcl',
 
-  extras: $ => [
-    /\s/,
+  // External scanner for inline data content
+  externals: $ => [
+    $.inline_data_content,
   ],
 
+  // Don't treat newlines as whitespace - they're significant in JCL
+  extras: $ => [
+    / +/,  // Only horizontal whitespace (spaces)
+    /\t+/,  // Tabs
+  ],
+
+  // Only keep truly necessary conflicts for complex statement parsing
   conflicts: $ => [
-    [$.job_statement],
-    [$.dd_statement],
-    [$.parameter_value, $.quoted_string],
-    [$.parameter_value, $.dataset_name],
     [$._statement, $.proc_definition],
-    [$.inline_data],
-    [$.subparameter, $.keyword]
+    [$.continuation_line],
   ],
 
   rules: {
-    source_file: $ => repeat($._statement),
+    source_file: $ => repeat(choice($._statement, $._newline)),
+
+    _newline: $ => /\r?\n/,
 
     _statement: $ => choice(
       $.job_statement,
@@ -30,17 +35,33 @@ module.exports = grammar({
       $.else_statement,
       $.endif_statement,
       $.set_statement,
+      $.export_statement,
       $.include_statement,
-      $.jcllib_statement
+      $.jcllib_statement,
+      $.inline_data_end,
+      $.inline_data_content  // External scanner - lines not starting with /
     ),
 
     // JOB Statement  
+    // Format: //name JOB (acct),'programmer',params OR //name JOB acctinfo,'programmer',params
     job_statement: $ => seq(
       $.label,
       'JOB',
-      optional($.quoted_string),
+      optional(choice(
+        // Parenthesized accounting info followed by optional programmer name
+        seq($.accounting_info, optional(seq(',', $.quoted_string))),
+        // Just a quoted string (no accounting info)
+        $.quoted_string
+      )),
       repeat(seq(',', $.parameter)),
-      optional(seq(',', repeat($.continuation_line)))
+      repeat($.continuation_line)
+    ),
+
+    accounting_info: $ => choice(
+      // Parenthesized accounting info
+      seq('(', /[^)]+/, ')'),
+      // Simple accounting info without parentheses (e.g., ACTINFO1)
+      /[A-Z][A-Z0-9]*/
     ),
 
     // EXEC Statement
@@ -52,7 +73,8 @@ module.exports = grammar({
         seq('PROC=', $.proc_name),
         $.proc_name
       ),
-      repeat(seq(',', $.parameter))
+      repeat(seq(',', $.parameter)),
+      repeat($.continuation_line)
     ),
 
     // DD Statement
@@ -61,13 +83,27 @@ module.exports = grammar({
       'DD',
       optional(choice(
         'DUMMY',
-        $.inline_data,  // Combined inline data
+        // DD * with parameters like SYMBOLS=JCLONLY, DLM=XX
+        seq($.inline_data_block, repeat(seq(',', $.parameter))),
         seq(
           $.parameter,
           repeat(seq(',', $.parameter)),
-          optional(seq(',', repeat($.continuation_line)))
+          repeat($.continuation_line)
         )
       ))
+    ),
+
+    // Continuation line: comma at end, newline, // with spaces, more parameters
+    // Each continuation line starts with comma (from previous line) + newline + //
+    // and contains parameters that may themselves end with comma (for next continuation)
+    // Comments may appear between continuation lines
+    continuation_line: $ => seq(
+      ',',
+      $._newline,
+      repeat(seq($.comment, $._newline)),  // Allow comments between continuations
+      '//',
+      $.parameter,
+      repeat(seq(',', $.parameter))
     ),
 
     // PROC Statement  
@@ -76,7 +112,8 @@ module.exports = grammar({
       'PROC',
       optional(seq(
         $.parameter,
-        repeat(seq(',', $.parameter))
+        repeat(seq(',', $.parameter)),
+        repeat($.continuation_line)  // Support continuation lines in PROC
       ))
     ),
 
@@ -106,7 +143,8 @@ module.exports = grammar({
     if_statement: $ => seq(
       $.label,
       'IF',
-      $.condition
+      $.condition,
+      optional('THEN')
     ),
 
     // ELSE Statement
@@ -128,6 +166,14 @@ module.exports = grammar({
       $.symbol_assignment
     ),
 
+    // EXPORT Statement (for JCL symbol export)
+    export_statement: $ => seq(
+      $.label,
+      'EXPORT',
+      'SYMLIST=',
+      choice('*', /[A-Z][A-Z0-9]*/)  // * for all or specific symbol name
+    ),
+
     // INCLUDE Statement
     include_statement: $ => seq(
       $.label,
@@ -141,16 +187,25 @@ module.exports = grammar({
       $.label,
       'JCLLIB',
       'ORDER=',
-      $.library_list
+      choice(
+        $.library_list,
+        $.quoted_string,         // Single quoted library
+        seq('(', $.quoted_string, ')'),  // Quoted in parens
+        seq('(', $.quoted_string, repeat(seq(',', $.quoted_string)), ')')  // Multiple quoted
+      )
     ),
 
     // Comment
     comment: $ => /\/\/\*.*/,
 
-    // Label (job name, step name, DD name, etc.)
+    // Label (job name, step name, DD name, etc.) - can be empty for DD concatenation
+    // Supports step.ddname pattern like //PRC001.FILEIN DD
     label: $ => seq(
       '//',
-      optional($.name)
+      optional(choice(
+        seq($.name, '.', $.name),  // step.ddname override
+        $.name
+      ))
     ),
 
     // Basic identifiers
@@ -163,21 +218,23 @@ module.exports = grammar({
     member_name: $ => /[A-Z][A-Z0-9#@$]{0,7}/,
     
     dataset_name: $ => choice(
-      // Simple dataset name
-      /[A-Z][A-Z0-9]*(\.[A-Z][A-Z0-9]*)*/,
-      // Dataset with member
-      seq(
-        /[A-Z][A-Z0-9]*(\.[A-Z][A-Z0-9]*)*/,
+      // Dataset with member - highest precedence
+      prec(3, seq(
+        /[A-Z][A-Z0-9]*(\.[A-Z0-9]+)*/,
         '(',
         $.member_name,
         ')'
-      ),
+      )),
       // GDG dataset
-      $.gdg_dataset,
+      prec(2, $.gdg_dataset),
+      // Qualified dataset name (with dots) - note: qualifiers can start with letter or digit after dot
+      prec(1, /[A-Z][A-Z0-9]*\.[A-Z0-9]+(\.[A-Z0-9]+)*/),
       // Temporary dataset
-      /&&[A-Z][A-Z0-9]*/,
+      prec(1, /&&[A-Z][A-Z0-9]*/),
       // Referback
-      /\*\.[A-Z][A-Z0-9]*(\.[A-Z][A-Z0-9]*)*/
+      prec(1, /\*\.[A-Z][A-Z0-9]*(\.[A-Z][A-Z0-9]*)*/),
+      // Simple dataset name - lowest precedence
+      prec(0, /[A-Z][A-Z0-9]*/)
     ),
 
     // GDG Dataset Support - Generation Data Group notation
@@ -197,74 +254,108 @@ module.exports = grammar({
       seq(',', $.parameter)
     )),
 
-    accounting_info: $ => seq(
-      '(',
-      /[^)]+/,
-      ')',
-      optional(seq(',', $.quoted_string))
-    ),
-
     parameter: $ => choice(
-      // Keyword=value parameter - prioritize quoted_string first
-      seq($.keyword, '=', $.quoted_string),
-      seq($.keyword, '=', $.parameter_value),
-      seq($.keyword, '=', $.symbolic_parameter),
-      seq($.keyword, '=', $.subparameter_list),
-      // Special case for DSN dataset references
-      seq(alias('DSN', 'keyword'), '=', $.dataset_name),
-      // Special case for SYSOUT=*
-      seq(alias('SYSOUT', 'keyword'), '=', $.sysout_value),
-      // Positional parameter
-      $.parameter_value,
-      $.symbolic_parameter
+      // Empty value (MEMNAME=,) - highest precedence to catch trailing comma pattern
+      prec(6, seq($.keyword, '=')),
+      // Keyword=value parameters - higher precedence
+      prec(5, seq($.keyword, '=', $.quoted_string)),
+      prec(4, seq($.keyword, '=', $.subparameter_list)),
+      prec(3, seq($.keyword, '=', $.symbolic_parameter)),
+      // Keyword with dotted value (must have dots - for dataset names)
+      prec(2, seq($.keyword, '=', $.dotted_value)),
+      // DCB=BLKSIZE=400 pattern (keyword=keyword=value without parens)
+      prec(2, seq($.keyword, '=', /[A-Z]+=[A-Z0-9]+/)),
+      // DCB=BLKSIZE=&SYM pattern (keyword=keyword=symbolic)
+      prec(2, seq($.keyword, '=', /[A-Z]+=&[A-Z][A-Z0-9]*/)),
+      prec(1, seq($.keyword, '=', $.parameter_value)),
+      // Special case for SYSOUT=*, RESTART=*, DEST=* etc.
+      prec(3, seq($.keyword, '=', '*')),
+      // Positional parameters - lower precedence
+      prec(0, $.symbolic_parameter),
+      prec(-1, $.parameter_value)
     ),
 
-    sysout_value: $ => '*',
+    // Referback pattern for DCB, etc.
+    referback: $ => /\*\.[A-Z][A-Z0-9]*/,
 
+    // keyword for parameter names - don't use token() so it's contextual
     keyword: $ => /[A-Z]+/,
 
-    parameter_value: $ => /[A-Z0-9#@$*]+/,
+    // parameter_value - no token() so parser context can disambiguate
+    parameter_value: $ => prec(-1, /[A-Z0-9#@$][A-Z0-9#@$*]*|\*[A-Z0-9#@$]+/),
 
-    simple_value: $ => /[A-Z0-9#@$*]+/,
+    // Dotted value for dataset names - handles:
+    // - Simple dotted: AWS.M2.CARDDEMO
+    // - Symbolic prefix: &HLQ..CARDDEMO (double dot after symbol)
+    // - Mixed: &CICSHLQ..CICS.SDFHLOAD
+    // - Embedded symbolic: OEM.DB2.&SSID..SDSNEXIT (symbol in middle)
+    // - With member: &HLQ..COBOL.SRC(MEMBERNAME)
+    // - Symbolic with symbolic member: &SRCLIB(&MEMNAME)
+    // - Symbolic with literal member: &DFHSAMP(DFHEILID)
+    // - Temporary datasets: &&SYSCIN
+    // - Temporary with dots: &&LOADSET
+    // - GDG notation: DATASET.NAME(+1), (0), (-1)
+    dotted_value: $ => choice(
+      // Temp dataset with double ampersand
+      prec(7, /&&[A-Z][A-Z0-9]*/),
+      // Embedded symbolic in middle: OEM.DB2.&SSID..SDSNEXIT
+      prec(6, /[A-Z][A-Z0-9]*(\.[A-Z0-9]+)*\.&[A-Z][A-Z0-9]*\.\.[A-Z0-9]+(\.[A-Z0-9]+)*/),
+      // Symbolic with symbolic member: &SRCLIB(&MEMNAME)
+      prec(5, /&[A-Z][A-Z0-9]*\(&[A-Z][A-Z0-9]*\)/),
+      // Symbolic with literal member: &DFHSAMP(DFHEILID)
+      prec(5, /&[A-Z][A-Z0-9]*\([A-Z][A-Z0-9#@$]*\)/),
+      // Symbolic with member notation: &HLQ..CICSLOAD(MEMBER)
+      prec(4, /&[A-Z][A-Z0-9]*\.\.[A-Z0-9]+(\.[A-Z0-9]+)*\([A-Z][A-Z0-9#@$]*\)/),
+      // Symbolic with symbolic member after dots: &HLQ..SRC(&MEMNAME)
+      prec(4, /&[A-Z][A-Z0-9]*\.\.[A-Z0-9]+(\.[A-Z0-9]+)*\(&[A-Z][A-Z0-9]*\)/),
+      // Symbolic with GDG generation: &HLQ..DATASET(+1) or (0)
+      prec(4, /&[A-Z][A-Z0-9]*\.\.[A-Z0-9]+(\.[A-Z0-9]+)*\([+-]?\d+\)/),
+      // With symbolic prefix and double dot
+      prec(3, /&[A-Z][A-Z0-9]*\.\.[A-Z0-9]+(\.[A-Z0-9]+)*/),
+      // Dotted with GDG generation number: DATASET.NAME(+1)
+      prec(2, /[A-Z][A-Z0-9]*\.[A-Z0-9]+(\.[A-Z0-9]+)*\([+-]?\d+\)/),
+      // Simple dotted value with member: DATASET.NAME(MEMBER)
+      prec(2, /[A-Z][A-Z0-9]*\.[A-Z0-9]+(\.[A-Z0-9]+)*\([A-Z][A-Z0-9#@$]*\)/),
+      // Simple dotted value
+      prec(1, /[A-Z][A-Z0-9]*\.[A-Z0-9]+(\.[A-Z0-9]+)*/)
+    ),
 
-    quoted_string: $ => /\'[^\']*\'/,
+    simple_value: $ => token(/[A-Z0-9#@$*]+/),
+
+    // quoted_string uses token() for atomic matching
+    quoted_string: $ => token(/\'[^\']*\'/),
 
     symbolic_parameter: $ => /&[A-Z][A-Z0-9]*/,
 
     subparameter_list: $ => seq(
       '(',
       optional(seq(
-        $.subparameter,
-        repeat(seq(',', $.subparameter))
+        optional($.subparameter),  // First subparameter is optional for patterns like (,PASS)
+        repeat(seq(',', optional($.subparameter)))
       )),
       ')'
     ),
 
-    _subparameter_item: $ => choice(
-      /\d+/,  // Direct number pattern
-      $.simple_value,
-      $.quoted_string,
-      seq($.keyword, '=', choice($.simple_value, /\d+/)),
-      $.subparameter_list  // Nested lists like SPACE=(CYL,(1,1),RLSE)
-    ),
-
     subparameter: $ => choice(
-      // Numbers
-      /\d+/,
-      // Keyword=value pairs (like RECFM=FB, LRECL=80) - must come before simple identifiers
-      seq(/[A-Z]+/, '=', choice(/[A-Z0-9#@$*]+/, /\d+/)),
-      // Simple identifiers (like NEW, CATLG, DELETE, CYL, RLSE)
-      /[A-Z][A-Z0-9#@$*]*/,
+      // Numbers - highest precedence for pure numeric
+      prec(3, /\d+/),
       // Quoted strings
-      /\'[^\']*\'/,
+      prec(3, /\'[^\']*\'/),
+      // Referback pattern: *.DDNAME
+      prec(3, /\*\.[A-Z][A-Z0-9]*/),
+      // Standalone asterisk (for SYSOUT=(*,INTRDR))
+      prec(3, '*'),
+      // Symbolic parameters like &SYSLBLK
+      prec(3, /&[A-Z][A-Z0-9]*/),
+      // Keyword=value pairs (like RECFM=FB, LRECL=80, BLKSIZE=3200) - use single regex
+      prec(2, /[A-Z]+=[A-Z0-9]+/),
+      // Keyword=symbolic pairs (like BLKSIZE=&SYSLBLK)
+      prec(2, /[A-Z]+=&[A-Z][A-Z0-9]*/),
+      // Simple identifiers (like NEW, CATLG, DELETE, CYL, RLSE, INTRDR)
+      prec(1, /[A-Z][A-Z0-9]*/),
       // Nested parameter lists like (10,5)
-      $.subparameter_list
+      prec(0, $.subparameter_list)
     ),
-
-    // Inline data marker (simplified)
-    inline_data: $ => '*',
-    
-    inline_delimiter: $ => '/*',
 
     // Conditions for IF statements
     condition: $ => choice(
@@ -296,24 +387,31 @@ module.exports = grammar({
 
     symbol_value: $ => choice(
       /\'[^\']*\'/,        // Direct quoted string pattern
+      /&[A-Z][A-Z0-9]*\.\.[A-Z0-9]+(\.[A-Z0-9]+)*/,  // Symbolic with double dot: &HLQ..CBL
+      /[A-Z][A-Z0-9]*(\.[A-Z0-9]+)+/,  // Dotted value like AWS.M2
       /[A-Z0-9#@$*]+/,    // Direct simple value pattern  
       /&[A-Z][A-Z0-9]*/   // Direct symbol reference pattern
     ),
 
-    // Library list for JCLLIB
+    // Library list for JCLLIB - can have symbolic references with ..
     library_list: $ => choice(
-      $.dataset_name,
-      seq('(', $.dataset_name, repeat(seq(',', $.dataset_name)), ')')
+      $.library_name,
+      seq('(', $.library_name, repeat(seq(',', $.library_name)), ')')
     ),
 
-    // Continuation handling
-    continuation_line: $ => seq(
-      '//',
-      /\s+/,
-      repeat1(choice(
-        $.parameter,
-        seq(',', $.parameter)
-      ))
-    ),
+    // Library name can include symbolic references like &HLQ..CARDDEMO.PRC
+    library_name: $ => /(&[A-Z][A-Z0-9]*\.?)+[A-Z0-9]*(\.[A-Z0-9]+)*/,
+
+    // Inline data block: DD * followed by data until /*
+    // Note: Inline data content is simplified - actual parsing may need external scanner
+    inline_data_block: $ => '*',
+
+    // Inline data line - matches lines that don't start with // or /*
+    // This captures free-form inline data content after DD * statements
+    // Pattern: starts with space/letter/digit but NOT with /
+    inline_data_line: $ => prec(-10, /[^\/\r\n][^\r\n]*/),
+
+    // Inline data delimiter - line starting with /* 
+    inline_data_end: $ => /\/\*[^\r\n]*/,
   }
 });

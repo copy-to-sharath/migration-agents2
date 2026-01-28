@@ -1376,6 +1376,7 @@ module.exports = grammar({
       $.delete_statement,
       $.display_statement,
       $.divide_statement,
+      $.exec_statement,
       $.exit_statement,
       $.goback_statement,
       $.goto_statement,
@@ -1465,10 +1466,21 @@ module.exports = grammar({
     ),
 
     replacing_clause: $ => seq(
+      $._REPLACING,
+      repeat1($.copy_replacing_item)
+    ),
+
+    copy_replacing_item: $ => seq(
       field('leading_or_trailing', optional(choice($.LEADING, $.TRAILING))),
-      field('x', choice($.WORD, $.string)),
-      optional($._BY),
-      field('by', choice($.WORD, $.string)),
+      field('from', choice($.pseudo_text, $.WORD, $.string)),
+      $._BY,
+      field('to', choice($.pseudo_text, $.WORD, $.string)),
+    ),
+
+    pseudo_text: $ => seq(
+      '==',
+      repeat(choice($._WORD, $.number, '(', ')', '-')),
+      '=='
     ),
 
     start_statement: $ => seq(
@@ -1908,6 +1920,24 @@ module.exports = grammar({
     ),
 
     when_other: $ => $._WHEN_OTHER,
+
+    // EXEC CICS/SQL/DLI statements - captures content between EXEC and END-EXEC
+    exec_statement: $ => seq(
+      $._EXEC,
+      field('type', $._WORD),
+      field('content', repeat($._exec_content)),
+      $._END_EXEC
+    ),
+
+    _exec_content: $ => prec(2, choice(
+      $._WORD,
+      $.number,
+      $.LENGTH,
+      $.string,
+      '(',
+      ')',
+      ','
+    )),
 
     exit_statement: $ => prec.left(seq(
       $._EXIT,
@@ -2962,6 +2992,7 @@ module.exports = grammar({
     _END_DISPLAY: $ => /[eE][nN][dD]-[dD][iI][sS][pP][lL][aA][yY]/,
     _END_DIVIDE: $ => /[eE][nN][dD]-[dD][iI][vV][iI][dD][eE]/,
     _END_EVALUATE: $ => /[eE][nN][dD]-[eE][vV][aA][lL][uU][aA][tT][eE]/,
+    _END_EXEC: $ => /[eE][nN][dD]-[eE][xX][eE][cC]/,
     _END_FUNCTION: $ => /[eE][nN][dD]-[fF][uU][nN][cC][tT][iI][oO][nN]/,
     _END_IF: $ => /[eE][nN][dD]-[iI][fF]/,
     _END_MULTIPLY: $ => /[eE][nN][dD]-[mM][uU][lL][tT][iI][pP][lL][yY]/,
@@ -2993,6 +3024,7 @@ module.exports = grammar({
     _EVENT_STATUS: $ => /[eE][vV][eE][nN][tT]-[sS][tT][aA][tT][uU][sS]/,
     _EXCEPTION: $ => /[eE][xX][cC][eE][pP][tT][iI][oO][nN]/,
     _EXCLUSIVE: $ => /[eE][xX][cC][lL][uU][sS][iI][vV][eE]/,
+    _EXEC: $ => /[eE][xX][eE][cC]/,
     _EXIT: $ => /[eE][xX][iI][tT]/,
     _EXTEND: $ => /[eE][xX][tT][eE][nN][dD]/,
     _EXTERNAL: $ => /[eE][xX][tT][eE][rR][nN][aA][lL]/,
@@ -3754,9 +3786,9 @@ module.exports = grammar({
 
     COMPUTATIONAL: $ => $._COMPUTATIONAL,
     _COMPUTATIONAL: $ => /[cC][oO][mM][pP][uU][tT][aA][tT][iI][oO][nN][aA][lL]/,
-    _NOT_EQUAL: $ => /(!=)|([nN][oO][tT][ \t]+(([eE][qQ][uU][aA][lL])|=))/,
-    _NOT_LESS: $ => /([nN][oO][tT][ \t]+(<|[lL][eE][sS][sS]))/,
-    _NOT_GREATER: $ => /([nN][oO][tT][ \t]+(>|[gG][rR][eE][aA][tT][eE][rR]))/,
+    _NOT_EQUAL: $ => /(!=)|([nN][oO][tT][ \t]*(([eE][qQ][uU][aA][lL])|=))/,
+    _NOT_LESS: $ => /([nN][oO][tT][ \t]*(<|[lL][eE][sS][sS]))/,
+    _NOT_GREATER: $ => /([nN][oO][tT][ \t]*(>|[gG][rR][eE][aA][tT][eE][rR]))/,
 
     NOT_OMITTED: $ => /[nN][oO][tT][ \t]+[oO][mM][iI][tT][tT][eE][dD]/,
     NOT_NUMERIC: $ => /[nN][oO][tT][ \t]+[nN][uU][mM][eE][rR][iI][cC]/,

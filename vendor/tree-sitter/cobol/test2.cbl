@@ -1,0 +1,6 @@
+       IDENTIFICATION DIVISION.  
+       PROGRAM-ID. TESTPGM.  
+       PROCEDURE DIVISION.  
+       MAIN-PARA.  
+           SET ERR-FLG-OFF TO TRUE.  
+           STOP RUN.  

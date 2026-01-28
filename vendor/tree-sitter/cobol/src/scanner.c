@@ -36,8 +36,11 @@ static bool start_with_word( TSLexer *lexer, char *words[], int number_of_words)
         lexer->advance(lexer, true);
     }
 
-    char *keyword_pointer[number_of_words];
-    bool continue_check[number_of_words];
+    // Use fixed-size arrays for MSVC compatibility (max 16 keywords supported)
+    #define MAX_KEYWORDS 16
+    char *keyword_pointer[MAX_KEYWORDS];
+    bool continue_check[MAX_KEYWORDS];
+    if (number_of_words > MAX_KEYWORDS) number_of_words = MAX_KEYWORDS;
     for(int i=0; i<number_of_words; ++i) {
         keyword_pointer[i] = words[i];
         continue_check[i] = true;
@@ -153,15 +156,21 @@ bool tree_sitter_COBOL_external_scanner_scan(void *payload, TSLexer *lexer,
     }
 
     if(valid_symbols[multiline_string]) {
+        // Handle both single-quoted (') and double-quoted (") strings
+        char quote_char = lexer->lookahead;
+        if(quote_char != '"' && quote_char != '\'') {
+            return false;
+        }
+        
         while(true) {
-            if(lexer->lookahead != '"') {
+            if(lexer->lookahead != quote_char) {
                 return false;
             }
             lexer->advance(lexer, false);
-            while(lexer->lookahead != '"' && lexer->lookahead != 0 && lexer->get_column(lexer) < 72) {
+            while(lexer->lookahead != quote_char && lexer->lookahead != 0 && lexer->get_column(lexer) < 72) {
                 lexer->advance(lexer, false);
             }
-            if(lexer->lookahead == '"') {
+            if(lexer->lookahead == quote_char) {
                 lexer->result_symbol = multiline_string;
                 lexer->advance(lexer, false);
                 lexer->mark_end(lexer);

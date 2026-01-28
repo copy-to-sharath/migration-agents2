@@ -1,0 +1,4 @@
+//SYSLIN   DD DSNAME=&&LOADSET,UNIT=VIO,
+//            DISP=(MOD,PASS),SPACE=(TRK,(3,3)),
+//            DCB=(BLKSIZE=3200)
+//SYSUT1   DD UNIT=VIO,SPACE=(CYL,(1,1))

@@ -1,7 +1,7 @@
 {
   "run_id": "auto",
   "artifact_version": 1,
-  "input_root": "/home/sharath/code/nopCommerce-release-1.90",
+  "input_root": "C:/Users/to_sh/Downloads/aws-mainframe-modernization-carddemo-main/mainframe_source",
   "output_root": "data/parquet",
   "include_extensions": ["*"],
   "exclude_extensions": [

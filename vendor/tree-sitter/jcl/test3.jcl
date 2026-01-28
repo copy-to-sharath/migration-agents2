@@ -1,0 +1,4 @@
+//TEST JOB
+//DD1 DD DSN=&&TEMP,
+//     DISP=SHR
+//DD2 DD UNIT=SYSDA

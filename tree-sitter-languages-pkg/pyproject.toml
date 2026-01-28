@@ -1,0 +1,38 @@
+[project]
+name = "migration-agents-tree-sitter-languages"
+version = "0.1.0"
+description = "Pre-built tree-sitter language grammars for mainframe migration (COBOL, JCL, BMS, CICS, copybook, etc.)"
+requires-python = ">=3.10"
+dependencies = [
+    "tree-sitter>=0.22.3",
+]
+readme = "README.md"
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Compilers",
+    "Topic :: Software Development :: Code Generators",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ts_languages"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/ts_languages/lib" = "ts_languages/lib"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/",
+    "README.md",
+]
+"src/ts_languages/lib" = "ts_languages/lib"

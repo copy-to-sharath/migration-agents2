@@ -16,6 +16,9 @@ dependencies = [
   "tree-sitter>=0.22.3",
 ]
 
+# Optional tree-sitter wheel packages are available but have varying version availability
+# Install manually if needed: pip install tree-sitter-python tree-sitter-javascript etc.
+
 [dependency-groups]
 dev = [
   "ruff>=0.6.8",

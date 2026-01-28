@@ -1,0 +1,7 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TESTPGM.
+       PROCEDURE DIVISION.
+       MAIN-PARA.
+           MOVE SPACES TO WS-MESSAGE
+                          ERRMSGO OF COSGN0AO.
+           STOP RUN.

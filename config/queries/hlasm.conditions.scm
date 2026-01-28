@@ -1,0 +1,1 @@
+; HLASM conditions - minimal placeholder

@@ -1,0 +1,1 @@
+; HLASM constants - minimal placeholder

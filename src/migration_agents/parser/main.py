@@ -54,8 +54,48 @@ from .semantic_resolver import (
 )
 from .symbol_extractor import SymbolRow, extract_symbols
 from .tree_sitter_loader import build_parser, load_language
+import signal
+import sys
+from contextlib import contextmanager
 
 LOGGER = logging.getLogger("migration_agents.parser")
+
+
+# Maximum time (seconds) to spend parsing a single file
+PARSE_TIMEOUT_SECONDS = 30
+
+
+class ParseTimeoutError(Exception):
+    """Raised when parsing takes too long."""
+    pass
+
+
+class ParseCrashError(Exception):
+    """Raised when parser crashes (segfault, etc)."""
+    pass
+
+
+@contextmanager
+def parse_timeout(seconds: int):
+    """
+    Context manager that raises ParseTimeoutError if parsing takes too long.
+    On Windows, uses a simple approach since signal.alarm isn't available.
+    """
+    if sys.platform == 'win32':
+        # Windows doesn't support SIGALRM, so we just yield
+        # Timeout protection would require threading or multiprocessing
+        yield
+    else:
+        def timeout_handler(signum, frame):
+            raise ParseTimeoutError(f"Parse timed out after {seconds}s")
+        
+        old_handler = signal.signal(signal.SIGALRM, timeout_handler)
+        signal.alarm(seconds)
+        try:
+            yield
+        finally:
+            signal.alarm(0)
+            signal.signal(signal.SIGALRM, old_handler)
 
 
 # Content-based language detection patterns for extensionless mainframe files
@@ -2011,10 +2051,40 @@ def _parse_file(
     if language_name == "html" and file_path.lower().endswith((".aspx", ".ascx", ".master")):
         content = _sanitize_aspx(content)
 
-    bundle = load_language(language_library_path, language_name)
+    try:
+        bundle = load_language(language_library_path, language_name)
+    except (FileNotFoundError, RuntimeError, OSError) as exc:
+        LOGGER.warning(
+            "tree_sitter_load_failed file=%s lang=%s error=%s",
+            file_path,
+            language_name,
+            exc,
+        )
+        return (
+            [],
+            [],
+            [],
+            [],
+            [],
+            _audit_row(
+                file_path,
+                language_name,
+                "tree_sitter",
+                "error",
+                reason=f"load_failed:{exc}",
+            ),
+        )
+
     try:
         parser = build_parser(bundle)
-        tree = parser.parse(bytes(content, "utf-8", errors="ignore"))
+        # Wrap parse in timeout context (effective on Unix, no-op on Windows)
+        with parse_timeout(PARSE_TIMEOUT_SECONDS):
+            tree = parser.parse(bytes(content, "utf-8", errors="ignore"))
+        
+        # Check if tree is valid (can happen with corrupt grammars)
+        if tree is None or tree.root_node is None:
+            raise RuntimeError("Parser returned invalid tree")
+        
         source_ref = file_path
         symbols_query = load_query(queries_dir, language_name, "symbols")
         calls_query = load_query(queries_dir, language_name, "calls")
@@ -2042,6 +2112,27 @@ def _parse_file(
                 "tree_sitter",
                 "ok",
                 reason="",
+            ),
+        )
+    except ParseTimeoutError as exc:
+        LOGGER.warning(
+            "tree_sitter_timeout file=%s lang=%s error=%s",
+            file_path,
+            language_name,
+            exc,
+        )
+        return (
+            [],
+            [],
+            [],
+            [],
+            [],
+            _audit_row(
+                file_path,
+                language_name,
+                "tree_sitter",
+                "error",
+                reason=f"timeout:{exc}",
             ),
         )
     except RuntimeError as exc:
@@ -2079,6 +2170,29 @@ def _parse_file(
                 "tree_sitter",
                 "error",
                 reason=f"io:{exc}",
+            ),
+        )
+    except Exception as exc:
+        # Catch-all for any other unexpected exception (grammar bugs, memory issues, etc.)
+        LOGGER.error(
+            "tree_sitter_unexpected_error file=%s lang=%s error_type=%s error=%s",
+            file_path,
+            language_name,
+            type(exc).__name__,
+            exc,
+        )
+        return (
+            [],
+            [],
+            [],
+            [],
+            [],
+            _audit_row(
+                file_path,
+                language_name,
+                "tree_sitter",
+                "error",
+                reason=f"unexpected:{type(exc).__name__}:{exc}",
             ),
         )
 

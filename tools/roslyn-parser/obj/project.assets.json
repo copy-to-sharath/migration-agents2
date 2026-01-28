@@ -2031,25 +2031,24 @@
     ]
   },
   "packageFolders": {
-    "/home/sharath/.nuget/packages/": {}
+    "C:\\Users\\to_sh\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/sharath/code/migration-agents/tools/roslyn-parser/RoslynParser.csproj",
+      "projectUniqueName": "C:\\Users\\to_sh\\code\\migration-agents2\\tools\\roslyn-parser\\RoslynParser.csproj",
       "projectName": "RoslynParser",
-      "projectPath": "/home/sharath/code/migration-agents/tools/roslyn-parser/RoslynParser.csproj",
-      "packagesPath": "/home/sharath/.nuget/packages/",
-      "outputPath": "/home/sharath/code/migration-agents/tools/roslyn-parser/obj/",
+      "projectPath": "C:\\Users\\to_sh\\code\\migration-agents2\\tools\\roslyn-parser\\RoslynParser.csproj",
+      "packagesPath": "C:\\Users\\to_sh\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\to_sh\\code\\migration-agents2\\tools\\roslyn-parser\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/sharath/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\to_sh\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "/usr/lib/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2068,7 +2067,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -2114,18 +2113,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.NETCore.App.Host.linux-x64",
-            "version": "[8.0.22, 8.0.22]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.310/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

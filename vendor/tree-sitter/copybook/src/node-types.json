@@ -1,0 +1,1013 @@
+[
+  {
+    "type": "comment_line",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "sequence_number",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "continuation_newline",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "embedded_comment",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "identifier",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "keyword",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "level_88_condition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "level_number",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "newline",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "operator",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "parenthesized",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "source_file",
+    "named": true,
+    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment_line",
+          "named": true
+        },
+        {
+          "type": "newline",
+          "named": true
+        },
+        {
+          "type": "statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "sequence_number",
+          "named": true
+        },
+        {
+          "type": "statement_body",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "statement_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "continuation_newline",
+          "named": true
+        },
+        {
+          "type": "embedded_comment",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "keyword",
+          "named": true
+        },
+        {
+          "type": "level_88_condition",
+          "named": true
+        },
+        {
+          "type": "level_number",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "parenthesized",
+          "named": true
+        },
+        {
+          "type": "picture_string",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "string_literal",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
+    "type": ",",
+    "named": false
+  },
+  {
+    "type": ".",
+    "named": false
+  },
+  {
+    "type": "66",
+    "named": false
+  },
+  {
+    "type": "77",
+    "named": false
+  },
+  {
+    "type": "88",
+    "named": false
+  },
+  {
+    "type": ":",
+    "named": false
+  },
+  {
+    "type": "<",
+    "named": false
+  },
+  {
+    "type": "<=",
+    "named": false
+  },
+  {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": "==",
+    "named": false
+  },
+  {
+    "type": ">",
+    "named": false
+  },
+  {
+    "type": ">=",
+    "named": false
+  },
+  {
+    "type": "ACCEPT",
+    "named": false
+  },
+  {
+    "type": "ADD",
+    "named": false
+  },
+  {
+    "type": "AFTER",
+    "named": false
+  },
+  {
+    "type": "ALL",
+    "named": false
+  },
+  {
+    "type": "ALPHABETIC",
+    "named": false
+  },
+  {
+    "type": "ALPHANUMERIC",
+    "named": false
+  },
+  {
+    "type": "ALPHANUMERIC-EDITED",
+    "named": false
+  },
+  {
+    "type": "ALSO",
+    "named": false
+  },
+  {
+    "type": "AND",
+    "named": false
+  },
+  {
+    "type": "ARE",
+    "named": false
+  },
+  {
+    "type": "AS",
+    "named": false
+  },
+  {
+    "type": "ASCENDING",
+    "named": false
+  },
+  {
+    "type": "BEFORE",
+    "named": false
+  },
+  {
+    "type": "BINARY",
+    "named": false
+  },
+  {
+    "type": "BLANK",
+    "named": false
+  },
+  {
+    "type": "BY",
+    "named": false
+  },
+  {
+    "type": "CHARACTER",
+    "named": false
+  },
+  {
+    "type": "CLOSE",
+    "named": false
+  },
+  {
+    "type": "COMP",
+    "named": false
+  },
+  {
+    "type": "COMP-1",
+    "named": false
+  },
+  {
+    "type": "COMP-2",
+    "named": false
+  },
+  {
+    "type": "COMP-3",
+    "named": false
+  },
+  {
+    "type": "COMP-4",
+    "named": false
+  },
+  {
+    "type": "COMP-5",
+    "named": false
+  },
+  {
+    "type": "COMPUTATIONAL",
+    "named": false
+  },
+  {
+    "type": "COMPUTATIONAL-1",
+    "named": false
+  },
+  {
+    "type": "COMPUTATIONAL-2",
+    "named": false
+  },
+  {
+    "type": "COMPUTATIONAL-3",
+    "named": false
+  },
+  {
+    "type": "COMPUTATIONAL-4",
+    "named": false
+  },
+  {
+    "type": "COMPUTATIONAL-5",
+    "named": false
+  },
+  {
+    "type": "COMPUTE",
+    "named": false
+  },
+  {
+    "type": "CONTINUE",
+    "named": false
+  },
+  {
+    "type": "CONVERTING",
+    "named": false
+  },
+  {
+    "type": "COPY",
+    "named": false
+  },
+  {
+    "type": "CORR",
+    "named": false
+  },
+  {
+    "type": "CORRESPONDING",
+    "named": false
+  },
+  {
+    "type": "COUNT",
+    "named": false
+  },
+  {
+    "type": "DATE",
+    "named": false
+  },
+  {
+    "type": "DAY",
+    "named": false
+  },
+  {
+    "type": "DAY-OF-WEEK",
+    "named": false
+  },
+  {
+    "type": "DELETE",
+    "named": false
+  },
+  {
+    "type": "DELIMITED",
+    "named": false
+  },
+  {
+    "type": "DELIMITER",
+    "named": false
+  },
+  {
+    "type": "DEPENDING",
+    "named": false
+  },
+  {
+    "type": "DESCENDING",
+    "named": false
+  },
+  {
+    "type": "DFHBMASB",
+    "named": false
+  },
+  {
+    "type": "DFHBMASK",
+    "named": false
+  },
+  {
+    "type": "DFHCLEAR",
+    "named": false
+  },
+  {
+    "type": "DFHENTER",
+    "named": false
+  },
+  {
+    "type": "DFHPA1",
+    "named": false
+  },
+  {
+    "type": "DFHPA2",
+    "named": false
+  },
+  {
+    "type": "DFHPF1",
+    "named": false
+  },
+  {
+    "type": "DFHPF10",
+    "named": false
+  },
+  {
+    "type": "DFHPF11",
+    "named": false
+  },
+  {
+    "type": "DFHPF12",
+    "named": false
+  },
+  {
+    "type": "DFHPF2",
+    "named": false
+  },
+  {
+    "type": "DFHPF3",
+    "named": false
+  },
+  {
+    "type": "DFHPF4",
+    "named": false
+  },
+  {
+    "type": "DFHPF5",
+    "named": false
+  },
+  {
+    "type": "DFHPF6",
+    "named": false
+  },
+  {
+    "type": "DFHPF7",
+    "named": false
+  },
+  {
+    "type": "DFHPF8",
+    "named": false
+  },
+  {
+    "type": "DFHPF9",
+    "named": false
+  },
+  {
+    "type": "DFHRED",
+    "named": false
+  },
+  {
+    "type": "DISPLAY",
+    "named": false
+  },
+  {
+    "type": "DISPLAY-1",
+    "named": false
+  },
+  {
+    "type": "DIVIDE",
+    "named": false
+  },
+  {
+    "type": "DLI",
+    "named": false
+  },
+  {
+    "type": "EIBAID",
+    "named": false
+  },
+  {
+    "type": "EJECT",
+    "named": false
+  },
+  {
+    "type": "ELSE",
+    "named": false
+  },
+  {
+    "type": "END-EVALUATE",
+    "named": false
+  },
+  {
+    "type": "END-EXEC",
+    "named": false
+  },
+  {
+    "type": "END-IF",
+    "named": false
+  },
+  {
+    "type": "END-PERFORM",
+    "named": false
+  },
+  {
+    "type": "END-STRING",
+    "named": false
+  },
+  {
+    "type": "END-UNSTRING",
+    "named": false
+  },
+  {
+    "type": "EQUAL",
+    "named": false
+  },
+  {
+    "type": "EVALUATE",
+    "named": false
+  },
+  {
+    "type": "EXEC",
+    "named": false
+  },
+  {
+    "type": "EXECUTE",
+    "named": false
+  },
+  {
+    "type": "EXIT",
+    "named": false
+  },
+  {
+    "type": "EXTEND",
+    "named": false
+  },
+  {
+    "type": "EXTERNAL",
+    "named": false
+  },
+  {
+    "type": "FALSE",
+    "named": false
+  },
+  {
+    "type": "FILLER",
+    "named": false
+  },
+  {
+    "type": "FIRST",
+    "named": false
+  },
+  {
+    "type": "FROM",
+    "named": false
+  },
+  {
+    "type": "GIVING",
+    "named": false
+  },
+  {
+    "type": "GLOBAL",
+    "named": false
+  },
+  {
+    "type": "GO",
+    "named": false
+  },
+  {
+    "type": "GREATER",
+    "named": false
+  },
+  {
+    "type": "HIGH-VALUE",
+    "named": false
+  },
+  {
+    "type": "HIGH-VALUES",
+    "named": false
+  },
+  {
+    "type": "I-O",
+    "named": false
+  },
+  {
+    "type": "IF",
+    "named": false
+  },
+  {
+    "type": "IN",
+    "named": false
+  },
+  {
+    "type": "INDEX",
+    "named": false
+  },
+  {
+    "type": "INDEXED",
+    "named": false
+  },
+  {
+    "type": "INITIAL",
+    "named": false
+  },
+  {
+    "type": "INITIALIZE",
+    "named": false
+  },
+  {
+    "type": "INPUT",
+    "named": false
+  },
+  {
+    "type": "INSPECT",
+    "named": false
+  },
+  {
+    "type": "INTO",
+    "named": false
+  },
+  {
+    "type": "IS",
+    "named": false
+  },
+  {
+    "type": "JUST",
+    "named": false
+  },
+  {
+    "type": "JUSTIFIED",
+    "named": false
+  },
+  {
+    "type": "KEY",
+    "named": false
+  },
+  {
+    "type": "LEADING",
+    "named": false
+  },
+  {
+    "type": "LEFT",
+    "named": false
+  },
+  {
+    "type": "LESS",
+    "named": false
+  },
+  {
+    "type": "LOW-VALUE",
+    "named": false
+  },
+  {
+    "type": "LOW-VALUES",
+    "named": false
+  },
+  {
+    "type": "MOVE",
+    "named": false
+  },
+  {
+    "type": "MULTIPLY",
+    "named": false
+  },
+  {
+    "type": "NEXT",
+    "named": false
+  },
+  {
+    "type": "NOT",
+    "named": false
+  },
+  {
+    "type": "NULL",
+    "named": false
+  },
+  {
+    "type": "NULLS",
+    "named": false
+  },
+  {
+    "type": "NUMERIC",
+    "named": false
+  },
+  {
+    "type": "NUMERIC-EDITED",
+    "named": false
+  },
+  {
+    "type": "OCCURS",
+    "named": false
+  },
+  {
+    "type": "OF",
+    "named": false
+  },
+  {
+    "type": "OFF",
+    "named": false
+  },
+  {
+    "type": "ON",
+    "named": false
+  },
+  {
+    "type": "OPEN",
+    "named": false
+  },
+  {
+    "type": "OR",
+    "named": false
+  },
+  {
+    "type": "OTHER",
+    "named": false
+  },
+  {
+    "type": "OUTPUT",
+    "named": false
+  },
+  {
+    "type": "OVERFLOW",
+    "named": false
+  },
+  {
+    "type": "PACKED-DECIMAL",
+    "named": false
+  },
+  {
+    "type": "PARAGRAPH",
+    "named": false
+  },
+  {
+    "type": "PERFORM",
+    "named": false
+  },
+  {
+    "type": "PIC",
+    "named": false
+  },
+  {
+    "type": "PICTURE",
+    "named": false
+  },
+  {
+    "type": "POINTER",
+    "named": false
+  },
+  {
+    "type": "QUOTE",
+    "named": false
+  },
+  {
+    "type": "QUOTES",
+    "named": false
+  },
+  {
+    "type": "READ",
+    "named": false
+  },
+  {
+    "type": "REDEFINES",
+    "named": false
+  },
+  {
+    "type": "REMAINDER",
+    "named": false
+  },
+  {
+    "type": "REPLACE",
+    "named": false
+  },
+  {
+    "type": "REPLACING",
+    "named": false
+  },
+  {
+    "type": "REWRITE",
+    "named": false
+  },
+  {
+    "type": "RIGHT",
+    "named": false
+  },
+  {
+    "type": "RUN",
+    "named": false
+  },
+  {
+    "type": "SECTION",
+    "named": false
+  },
+  {
+    "type": "SENTENCE",
+    "named": false
+  },
+  {
+    "type": "SEPARATE",
+    "named": false
+  },
+  {
+    "type": "SET",
+    "named": false
+  },
+  {
+    "type": "SIGN",
+    "named": false
+  },
+  {
+    "type": "SIZE",
+    "named": false
+  },
+  {
+    "type": "SKIP1",
+    "named": false
+  },
+  {
+    "type": "SKIP2",
+    "named": false
+  },
+  {
+    "type": "SKIP3",
+    "named": false
+  },
+  {
+    "type": "SPACE",
+    "named": false
+  },
+  {
+    "type": "SPACES",
+    "named": false
+  },
+  {
+    "type": "SQL",
+    "named": false
+  },
+  {
+    "type": "SQLIMS",
+    "named": false
+  },
+  {
+    "type": "START",
+    "named": false
+  },
+  {
+    "type": "STOP",
+    "named": false
+  },
+  {
+    "type": "STRING",
+    "named": false
+  },
+  {
+    "type": "SUBTRACT",
+    "named": false
+  },
+  {
+    "type": "SYNC",
+    "named": false
+  },
+  {
+    "type": "SYNCHRONIZED",
+    "named": false
+  },
+  {
+    "type": "TALLYING",
+    "named": false
+  },
+  {
+    "type": "TEST",
+    "named": false
+  },
+  {
+    "type": "THAN",
+    "named": false
+  },
+  {
+    "type": "THEN",
+    "named": false
+  },
+  {
+    "type": "THROUGH",
+    "named": false
+  },
+  {
+    "type": "THRU",
+    "named": false
+  },
+  {
+    "type": "TIME",
+    "named": false
+  },
+  {
+    "type": "TIMES",
+    "named": false
+  },
+  {
+    "type": "TO",
+    "named": false
+  },
+  {
+    "type": "TRAILING",
+    "named": false
+  },
+  {
+    "type": "TRUE",
+    "named": false
+  },
+  {
+    "type": "UNSTRING",
+    "named": false
+  },
+  {
+    "type": "UNTIL",
+    "named": false
+  },
+  {
+    "type": "USAGE",
+    "named": false
+  },
+  {
+    "type": "VALUE",
+    "named": false
+  },
+  {
+    "type": "VALUES",
+    "named": false
+  },
+  {
+    "type": "VARYING",
+    "named": false
+  },
+  {
+    "type": "WHEN",
+    "named": false
+  },
+  {
+    "type": "WITH",
+    "named": false
+  },
+  {
+    "type": "WRITE",
+    "named": false
+  },
+  {
+    "type": "ZERO",
+    "named": false
+  },
+  {
+    "type": "ZEROES",
+    "named": false
+  },
+  {
+    "type": "ZEROS",
+    "named": false
+  },
+  {
+    "type": "number",
+    "named": true
+  },
+  {
+    "type": "picture_string",
+    "named": true
+  },
+  {
+    "type": "sequence_number",
+    "named": true
+  }
+]

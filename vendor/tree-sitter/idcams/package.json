@@ -1,0 +1,13 @@
+{
+  "name": "tree-sitter-idcams",
+  "version": "1.0.0",
+  "description": "Tree-sitter grammar for IBM IDCAMS (Access Method Services)",
+  "main": "bindings/node",
+  "keywords": [
+    "parser",
+    "tree-sitter",
+    "idcams",
+    "mainframe",
+    "vsam"
+  ]
+}

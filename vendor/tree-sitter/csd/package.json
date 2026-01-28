@@ -1,0 +1,13 @@
+{
+  "name": "tree-sitter-csd",
+  "version": "1.0.0",
+  "description": "Tree-sitter grammar for CICS System Definition (CSD) files",
+  "main": "bindings/node",
+  "keywords": [
+    "parser",
+    "tree-sitter",
+    "csd",
+    "cics",
+    "mainframe"
+  ]
+}

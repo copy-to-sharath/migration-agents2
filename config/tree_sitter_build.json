@@ -1,0 +1,132 @@
+{
+  "output_path": "tree-sitter/languages.so",
+  "vendor_dir": "vendor/tree-sitter",
+  "build_dir": "build/tree-sitter",
+  "core_repo": "https://github.com/tree-sitter/tree-sitter",
+  "core_dir": "vendor/tree-sitter-core",
+  
+  "languages": [
+    {
+      "_comment": "=== Languages WITH wheel packages (cross-platform) ===",
+      "_note": "These can be loaded from pip packages instead of compiled library"
+    },
+    {
+      "name": "python",
+      "repo": "https://github.com/tree-sitter/tree-sitter-python",
+      "path": "."
+    },
+    {
+      "name": "javascript",
+      "repo": "https://github.com/tree-sitter/tree-sitter-javascript",
+      "path": "."
+    },
+    {
+      "name": "typescript",
+      "repo": "https://github.com/tree-sitter/tree-sitter-typescript",
+      "path": "typescript"
+    },
+    {
+      "name": "c_sharp",
+      "repo": "https://github.com/tree-sitter/tree-sitter-c-sharp",
+      "path": "."
+    },
+    {
+      "name": "html",
+      "repo": "https://github.com/tree-sitter/tree-sitter-html",
+      "path": "."
+    },
+    {
+      "name": "css",
+      "repo": "https://github.com/tree-sitter/tree-sitter-css",
+      "path": "."
+    },
+    {
+      "name": "sql",
+      "repo": "https://github.com/DerekStride/tree-sitter-sql",
+      "path": "."
+    },
+    {
+      "name": "xml",
+      "repo": "https://github.com/tree-sitter-grammars/tree-sitter-xml",
+      "path": "xml"
+    },
+    {
+      "name": "php",
+      "repo": "https://github.com/tree-sitter/tree-sitter-php",
+      "path": "php"
+    },
+    {
+      "name": "java",
+      "repo": "https://github.com/tree-sitter/tree-sitter-java",
+      "path": "."
+    },
+    
+    {
+      "_comment": "=== Languages WITHOUT wheel packages (require compilation) ==="
+    },
+    {
+      "name": "vbnet",
+      "repo": "https://github.com/tree-sitter-grammars/tree-sitter-vb",
+      "path": "."
+    },
+    
+    {
+      "_comment": "=== Mainframe Languages (custom grammars, require compilation) ==="
+    },
+    {
+      "name": "cobol",
+      "repo": "https://github.com/yutaro-sakamoto/tree-sitter-cobol",
+      "path": "."
+    },
+    {
+      "name": "jcl",
+      "repo": "https://github.com/sudojarvis/tree-sitter-jcl",
+      "path": "."
+    },
+    {
+      "name": "hlasm",
+      "repo": "https://github.com/eclipse-che4z/tree-sitter-hlasm",
+      "path": "."
+    },
+    
+    {
+      "_comment": "=== Custom/Local Grammars (no external repo) ==="
+    },
+    {
+      "name": "cics",
+      "repo": "",
+      "path": ".",
+      "_note": "Local grammar in vendor/tree-sitter/cics"
+    },
+    {
+      "name": "bms",
+      "repo": "",
+      "path": ".",
+      "_note": "Local grammar in vendor/tree-sitter/bms"
+    },
+    {
+      "name": "easytrieve",
+      "repo": "",
+      "path": ".",
+      "_note": "Local grammar in vendor/tree-sitter/easytrieve"
+    },
+    {
+      "name": "idcams",
+      "repo": "",
+      "path": ".",
+      "_note": "Local grammar for IDCAMS/AMS control files (.ctl)"
+    },
+    {
+      "name": "csd",
+      "repo": "",
+      "path": ".",
+      "_note": "Local grammar for CICS System Definition files (.csd)"
+    },
+    {
+      "name": "copybook",
+      "repo": "",
+      "path": ".",
+      "_note": "Local grammar for COBOL copybook files (no extension)"
+    }
+  ]
+}
